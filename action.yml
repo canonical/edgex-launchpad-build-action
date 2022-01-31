@@ -38,7 +38,7 @@ runs:
         service_root= 'production'
         launchpad = Launchpad.login("${{inputs.consumer_name}}", "${{inputs.access_token}}", "${{inputs.access_secret}}",service_root, version='devel')
         ubuntu = launchpad.distributions["ubuntu"]
-        release = ubuntu.getSeries(name_or_version="bionic")
+        release = ubuntu.getSeries(name_or_version="focal")
         edgex_team = launchpad.people["canonical-edgex"]
         snap = launchpad.snaps.getByName(name="${{inputs.edgex_snap}}", owner=edgex_team)
 
