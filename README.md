@@ -26,7 +26,7 @@ The supported input arguments are:
 |Argument|Description|
 |---|---|
 |edgex_snap|Name of the snap being built (i.e. `edgexfoundry`/`edgex-device-camera`)|
-|consumer_name|Launchpad consumer name (aka. consumer_key)|
+|consumer_name|Launchpad consumer name (aka. consumer key)|
 |access_token|Launchpad access token|
 |access_secret|Launchpad access secret|
 
