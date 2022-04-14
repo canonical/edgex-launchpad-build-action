@@ -26,7 +26,7 @@ The supported input arguments are:
 |Argument|Description|
 |---|---|
 |edgex_snap|Name of the snap being built (i.e. `edgexfoundry`/`edgex-device-camera`)|
-|consumer_name|Launchpad consumer name|
+|consumer_name|Launchpad consumer name (aka. consumer key)|
 |access_token|Launchpad access token|
 |access_secret|Launchpad access secret|
 
@@ -38,7 +38,7 @@ To regenerate the secrets, if needed, do the following:
 - copy this [Python script](https://github.com/canonical/edgex-sync/blob/main/utils/create-lp-credentals.py) to your computer.
 - run the script locally
 - It will prompt you to log into launchpad
-- A `.credentials` file will be generated with the secrets. Use the contents of that file to create the Github secrets
+- A `credentials` file will be generated with the secrets. Use the contents of that file (consumer_key, access_token, access_secret) to create the Github secrets.
 
 Note that to generate the credentials you need to be member of a Launchpad team with full access to the snap recipes, such as the [Canonical EdgeX Team](https://launchpad.net/~canonical-edgex)
 
