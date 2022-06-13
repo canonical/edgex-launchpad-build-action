@@ -35,7 +35,7 @@ The three secrets used to connect to Launchpad, `consumer_name`, `access_token` 
 The edgex-sync repository has a [list of defined secrets](https://github.com/canonical/edgex-sync/settings/secrets/actions) which include these three.
 
 To regenerate the secrets, if needed, do the following:
-- copy this [Python script](https://github.com/canonical/edgex-sync/blob/main/utils/create-lp-credentals.py) to your computer.
+- copy [create-lp-credentals](create-lp-credentals.py) Python script to your computer.
 - run the script locally
 - It will prompt you to log into launchpad
 - A `.credentials` file will be generated with the secrets. Use the contents of that file to create the Github secrets
