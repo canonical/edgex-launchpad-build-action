@@ -1,31 +1,33 @@
-# action.yml
-name: 'Start a launchpad build'
-description: 'Start a launchpad build'
+name: Request a launchpad build
+
 inputs:
-  edgex_snap:
-    description: "edgex_snap"
-    required: true  
-  consumer_name:
-    description: "consumer_name"
-    required: true
-  access_token:
-    description: "access_token"
-    required: true
-  access_secret:
-    description: "access_secret"
+  snap_name:
+    description: "Name of the snap"
     required: true
   architecture:
     description: "Target build architecture, such as: amd64, arm64, armhf"
     required: true
+  consumer_name:
+    description: "Launchpad consumer name (consumer key)"
+    required: true
+  access_token:
+    description: "Launchpad access token"
+    required: true
+  access_secret:
+    description: "Launchpad access secret"
+    required: true
+
 runs:
   using: composite
   steps:
     - name: Install dependencies
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         pip install launchpadlib
-      shell: bash
-    - name: Runch Launchpad commands
+
+    - name: Request build
+      shell: python
       run: |
         import os
         import sys
@@ -36,11 +38,10 @@ runs:
         launchpad = Launchpad.login("${{inputs.consumer_name}}", "${{inputs.access_token}}", "${{inputs.access_secret}}",service_root, version='devel')
         ubuntu = launchpad.distributions["ubuntu"]
         release = ubuntu.getSeries(name_or_version="focal")
-        edgex_team = launchpad.people["canonical-edgex"]
-        snap = launchpad.snaps.getByName(name="${{inputs.edgex_snap}}", owner=edgex_team)
+        owner = launchpad.people["canonical-edgex"]
+        snap = launchpad.snaps.getByName(name="${{inputs.snap_name}}", owner=owner)
 
         # it's not obvious from the documentation - but we need to specify the channel used for snapcraft, otherwise we get an old version
         arch = release.getDistroArchSeries(archtag="${{inputs.architecture}}")
         request = snap.requestBuild(archive=ubuntu.main_archive, distro_arch_series=arch, pocket='Updates', channels={"snapcraft":"edge"})
         print(request)
-      shell: python
