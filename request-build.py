@@ -19,4 +19,4 @@ snap = launchpad.snaps.getByName(
     name=snap_name, owner=launchpad.people["canonical-edgex"])
 request = snap.requestBuild(archive=ubuntu.main_archive, distro_arch_series=arch,
                             pocket='Updates', channels={"snapcraft": "stable/launchpad-buildd"})
-print(request)
+print("Build request has been submitted: "+request)
