@@ -31,6 +31,7 @@ runs:
         pip install launchpadlib
 
     - name: Request build
+      shell: bash
       run: python request-build.py
       env:
         CONSUMER_NAME: ${{inputs.consumer_name}}
