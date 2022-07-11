@@ -16,6 +16,10 @@ inputs:
   access_secret:
     description: "Launchpad access secret"
     required: true
+  ubuntu_series:
+    description: "Ubuntu series, such as: jammy, focal"
+    required: true
+    default: focal
 
 runs:
   using: composite
@@ -27,20 +31,13 @@ runs:
         pip install launchpadlib
 
     - name: Request build
-      shell: python
-      run: |
-        import os
-        import sys
-        import argparse
-        from launchpadlib.launchpad import Launchpad
-        from launchpadlib.launchpad import Credentials
-        service_root= 'production'
-        launchpad = Launchpad.login("${{inputs.consumer_name}}", "${{inputs.access_token}}", "${{inputs.access_secret}}",service_root, version='devel')
-        ubuntu = launchpad.distributions["ubuntu"]
-        release = ubuntu.getSeries(name_or_version="focal")
-        owner = launchpad.people["canonical-edgex"]
-        snap = launchpad.snaps.getByName(name="${{inputs.snap_name}}", owner=owner)
-
-        arch = release.getDistroArchSeries(archtag="${{inputs.architecture}}")
-        request = snap.requestBuild(archive=ubuntu.main_archive, distro_arch_series=arch, pocket='Updates', channels={"snapcraft":"latest/stable"})
-        print(request)
+      shell: bash
+      working-directory: ${{github.action_path}}
+      run: python request-build.py
+      env:
+        CONSUMER_NAME: ${{inputs.consumer_name}}
+        ACCESS_TOKEN: ${{inputs.access_token}}
+        ACCESS_SECRET: ${{inputs.access_secret}}
+        SNAP_NAME: ${{inputs.snap_name}}
+        ARCH: ${{inputs.architecture}}
+        UBUNTU_SERIES: ${{inputs.ubuntu_series}}
