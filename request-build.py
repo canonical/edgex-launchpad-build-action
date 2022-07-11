@@ -18,5 +18,5 @@ arch = release.getDistroArchSeries(archtag=arch)
 snap = launchpad.snaps.getByName(
     name=snap_name, owner=launchpad.people["canonical-edgex"])
 request = snap.requestBuild(archive=ubuntu.main_archive, distro_arch_series=arch,
-                            pocket='Updates', channels={"snapcraft": "stable/launchpad-buildd"})
-print("Build request has been submitted: "+request)
+                            pocket='Updates', channels={"snapcraft": "latest/stable"})
+print("Build request has been submitted: {0}".format(request))
