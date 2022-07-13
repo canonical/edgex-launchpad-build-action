@@ -17,9 +17,9 @@ inputs:
     description: "Launchpad access secret"
     required: true
   ubuntu_series:
-    description: "Ubuntu series, such as: jammy, focal"
+    # If unset or empty string, it uses a default value given in the python script
+    description: "Ubuntu series version or name, such as: 22.04, jammy"
     required: true
-    default: focal
 
 runs:
   using: composite
